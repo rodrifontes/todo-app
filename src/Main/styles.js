@@ -17,3 +17,14 @@ export const CenteredContainer = styled.View`
   justify-content: center;
   flex: 1;
 `;
+
+export const TaksEmptyContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin-top: 64px;
+`;
+
+export const TaskEmptyImage = styled.Image`
+  width: 150px;
+  height: 150px;
+`;
