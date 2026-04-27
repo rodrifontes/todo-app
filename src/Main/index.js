@@ -2,6 +2,8 @@ import { tasks } from '../mocks/tasks';
 
 import Header from '../components/Header';
 import Tasks from '../components/Tasks';
+import AddTaskButton from '../components/AddTaskButton';
+import DeleteConfirmModal from '../components/DeleteConfirmModal';
 
 import { Container } from './styles';
 
@@ -16,7 +18,7 @@ export default function Main() {
 
   function handleDeleteTask(id) {
     alert(`Deletar Tarefa ${id}`);
-  }
+  } 
 
   return (
     <Container>
@@ -28,6 +30,12 @@ export default function Main() {
         onEditTask={handleEditTask}
         onDeleteTask={handleDeleteTask}
       />
+
+      <AddTaskButton onPress={() => alert('Cadastrar Tarefa')} />
+
+
+      <DeleteConfirmModal />
+
     </Container>
   );
 }

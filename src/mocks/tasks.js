@@ -30,4 +30,12 @@ export const tasks = [
     done: false,
     data: '2023-03-27 08:30',
   },
+
+  {
+    id: '5',
+    title: 'Ir ao Supermercado',
+    description: 'Comprar: Açucar, Café e Pão',
+    done: false,
+    data: '2023-03-27 08:30',
+  },
 ];
