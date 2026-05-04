@@ -1,24 +1,44 @@
+import { useState } from 'react';
+
 import { tasks } from '../mocks/tasks';
 
-import Header from '../components/Header';
-import Tasks from '../components/Tasks';
 import AddTaskButton from '../components/AddTaskButton';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
+import EditTaskModal from '../components/EditTaskModal';
+import Header from '../components/Header';
+import NewTaskModal from '../components/NewTaskModal';
+import Tasks from '../components/Tasks';
 
 import { Container } from './styles';
 
 export default function Main() {
+  const [isDeleteConfirmModalVisible, setIsDeleteConfirmModalVisible] = useState(false);
+  const [isNewTaskModalVisible, setIsNewTaskModalVisible] = useState(false);
+  const [isEditTaskModalVisible, setIsEditTaskModalVisible] = useState(false);
+  const [taskIdDeleted, setTaskIdDeleted] = useState();
+
   function handleChangeStatus(id) {
     alert(`Alterar Status da Tarefa ${id}`);
   }
 
   function handleEditTask(task) {
-    alert(`Alterar Tarefa {${task.id}, ${task.title}, ${task.description}`);
+    setIsEditTaskModalVisible(true);
   }
 
   function handleDeleteTask(id) {
-    alert(`Deletar Tarefa ${id}`);
-  } 
+    setTaskIdDeleted(id);
+    setIsDeleteConfirmModalVisible(true);
+  }
+
+  function handleDeleteConfirmModal() {
+    setIsDeleteConfirmModalVisible(false);
+    //alert(`Deletar Tarefa ${taskIdDeleted}`);
+  }
+
+  function handleNewTask(task) {
+    setIsNewTaskModalVisible(false);
+    alert(`Add tarefa com o titulo: ${task.title} e a descrição: ${task.description}`);
+  }
 
   return (
     <Container>
@@ -31,10 +51,25 @@ export default function Main() {
         onDeleteTask={handleDeleteTask}
       />
 
-      <AddTaskButton onPress={() => alert('Cadastrar Tarefa')} />
+      <AddTaskButton onPress={() => setIsNewTaskModalVisible(true)} />
 
 
-      <DeleteConfirmModal />
+      <DeleteConfirmModal
+        visible={isDeleteConfirmModalVisible}
+        onClose={() => setIsDeleteConfirmModalVisible(false)}
+        onConfirm={handleDeleteConfirmModal}
+      />
+
+      <NewTaskModal
+        visible={isNewTaskModalVisible}
+        onClose={() => setIsNewTaskModalVisible(false)}
+        onSave={handleNewTask}
+      />
+
+      <EditTaskModal
+        visible={isEditTaskModalVisible}
+        onClose={() => setIsEditTaskModalVisible(false)}
+      />
 
     </Container>
   );

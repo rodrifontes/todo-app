@@ -1,18 +1,20 @@
 import { Modal } from 'react-native';
 
-import { Text } from '../Text';
 
-import { Overlay, Body } from './styles';
+import { Body, Overlay } from './styles';
 
-export default function CustomModal({ children }) {
+export default function CustomModal({ children, visible, onClose }) {
   return (
     <Modal
+      visible={visible}
       transparent
       statusBarTranslucent
+      animationType='fade'
+      onRequestClose={onClose}
     >
       <Overlay>
         <Body>
-           {children}
+          {children}
         </Body>
       </Overlay>
     </Modal>
