@@ -5,8 +5,9 @@ import { Text } from '../Text';
 import { Header } from './styles';
 
 import close from '../../assets/images/close.png';
+import TaskForm from '../TaskForm';
 
-export default function EditTaskModal({ visible, onClose }) {
+export default function EditTaskModal({ visible, onClose, onSave, task }) {
   return (
     <CustomModal
       visible={visible}
@@ -19,6 +20,12 @@ export default function EditTaskModal({ visible, onClose }) {
           <Image source={close} />
         </TouchableOpacity>
       </Header>
+
+      <TaskForm
+        task={task}
+        onPress={onSave}
+        buttonLabel="Alterar"
+      />
     </CustomModal>
   );
 }

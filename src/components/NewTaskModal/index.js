@@ -21,7 +21,10 @@ export default function NewTaskModal({ visible, onClose, onSave }) {
         </TouchableOpacity>
       </Header>
 
-      <TaskForm onPress={onSave} />
+      <TaskForm
+        onPress={onSave}
+        buttonLabel="Cadastrar"
+      />
     </CustomModal>
   );
 }

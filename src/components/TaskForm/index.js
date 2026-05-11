@@ -4,9 +4,10 @@ import { Form, Input } from './styles';
 
 import Button from '../Button';
 
-export default function TaskForm({ onPress }) {
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
+export default function TaskForm({ onPress, buttonLabel = "Salvar", task }) {
+  const [id, setId] = useState(task?.id);
+  const [title, setTitle] = useState(task?.title);
+  const [description, setDescription] = useState(task?.description);
 
   return (
     <Form>
@@ -22,7 +23,9 @@ export default function TaskForm({ onPress }) {
         onChangeText={setDescription}
       />
 
-      <Button onPress={() => onPress({ title, description })}>Salvar</Button>
+      <Button disabled={!title || !description} onPress={() => onPress({ id, title, description })}>
+        {buttonLabel}
+      </Button>
     </Form>
   );
 }
