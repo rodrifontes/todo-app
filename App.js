@@ -3,6 +3,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Main from './src/Main';
 
+import { SQLiteProvider } from 'expo-sqlite';
+import { initializeDatabase } from './src/database/initializeDatabase';
+
 export default function App() {
   const [isFontsLoaded] = useFonts({
     'GeneralSans-400': require('./src/assets/fonts/GeneralSans-Regular.otf'),
@@ -15,8 +18,10 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <Main />
-    </SafeAreaProvider>
+    <SQLiteProvider databaseName='tasksdatabase.db' onInit={initializeDatabase}>
+      <SafeAreaProvider>
+        <Main />
+      </SafeAreaProvider>
+    </SQLiteProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ActivityIndicator } from 'react-native';
 
@@ -14,6 +14,8 @@ import Tasks from '../components/Tasks';
 
 import { CenteredContainer, Container, TaskEmpty } from './styles';
 
+import { useTasksDatabase } from '../database/useTasksDatabase';
+
 export default function Main() {
   const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
@@ -23,8 +25,21 @@ export default function Main() {
   const [taskIdDeleted, setTaskIdDeleted] = useState();
   const [taskBeingEdited, setTaskBeingEdited] = useState();
 
-  function handleChangeStatus(id) {
-    alert(`Alterar Status da Tarefa ${id}`);
+  const { show, create, remove, update, updateStatus } = useTasksDatabase();
+
+  useEffect(() => {
+    getTasks();
+  }, []);
+
+  async function getTasks() {
+    setIsLoading(true);
+    setTasks(await show());
+    setIsLoading(false);
+  }
+
+  async function handleChangeStatus(id) {
+    await updateStatus(id);
+    getTasks();
   }
 
   function handleEditTask(task) {
@@ -32,8 +47,10 @@ export default function Main() {
     setIsEditTaskModalVisible(true);
   }
 
-  function handleSaveEditTask() {
+  async function handleSaveEditTask(task) {
     setIsEditTaskModalVisible(false);
+    await update(task);
+    getTasks();
   }
 
   function handleDeleteTask(id) {
@@ -43,12 +60,14 @@ export default function Main() {
 
   function handleDeleteConfirmModal() {
     setIsDeleteConfirmModalVisible(false);
-    //alert(`Deletar Tarefa ${taskIdDeleted}`);
+    remove(taskIdDeleted);
+    getTasks();
   }
 
-  function handleNewTask(task) {
+  async function handleNewTask(task) {
     setIsNewTaskModalVisible(false);
-    alert(`Add tarefa com o titulo: ${task.title} e a descrição: ${task.description}`);
+    await create(task);
+    getTasks();
   }
 
   return (
